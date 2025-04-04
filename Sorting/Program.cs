@@ -6,7 +6,7 @@ public class Program
     {
         // https://github.com/accj1990/Sorting.git
         // https://pt.overleaf.com/read/kptbxrwtrzch#8b9776
-
+        // Agora funciona
         //int[] vet = ManagerFileReader.Arquivo10TXT();
 
         //PrintSolutionStatic.ImprimirArrayMesmaLinha(vet, Sorting.enums.Sortings.BUBBLESORT);
