@@ -2,37 +2,60 @@
 {
     class FilaDynamic
     {
-        public Celula? primeiro;
-        public Celula? ultimo;
+        public Celula? inicio;
+        public Celula? fim;
 
         public FilaDynamic()
         {
-            // Inicializa com uma célula "dummy" (valor padrão, como 0 ou -1)
-            this.primeiro = this.ultimo = new Celula(-1); // Use um valor adequado
+            this.inicio = null;
+            this.fim = null;
         }
 
         public bool Inserir(int item)
         {
-            this.ultimo.valor = item;
-            this.ultimo.prox = new Celula(-1); // Valor inicial para a nova célula
-            this.ultimo = this.ultimo.prox;
-
+            Celula nova = new Celula(item);
+            if (this.fim == null)
+            {
+                this.inicio = nova;
+                this.fim = nova;
+            }
+            else
+            {
+                this.fim.prox = nova;
+                this.fim = nova;
+            }
             return true;
         }
 
         public int Remover()
         {
-            if (this.ultimo == this.primeiro)
+            if (this.inicio == null)
             {
-                Console.WriteLine("Não é possível remover da fila.");
-                return -1; // Retorno padrão para erro
+                Console.WriteLine("Fila vazia. Não é possível remover.");
+                return -1;
             }
 
-            Celula? tmp = primeiro;
-            int valorRemovido = tmp.valor; // Armazena o valor antes de remover
-            this.primeiro = primeiro.prox;
+            int valor = this.inicio.valor;
+            this.inicio = this.inicio.prox;
 
-            return valorRemovido; // Retorna o valor removido
+            if (this.inicio == null)
+            {
+                this.fim = null;
+            }
+
+            return valor;
+        }
+
+        public void Mostrar()
+        {
+            Console.Write("Fila: ");
+            Celula? atual = this.inicio;
+            while (atual != null)
+            {
+                Console.Write(atual.valor + " ");
+                atual = atual.prox;
+            }
         }
     }
 }
+

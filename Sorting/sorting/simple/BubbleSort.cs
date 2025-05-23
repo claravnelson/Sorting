@@ -2,33 +2,22 @@
 {
     class BubbleSort
     {
-        public static int[] Sorting(int[] vet)
+        public static int[] Sorting(int[] vetor)
         {
-            long comparacoes = 0, atribuicoes = 0, trocas = 0;
-            int n = vet.Length;
-            atribuicoes++;
-
-            for (int i = 0; i < n; i++)
+            int n = vetor.Length;
+            for (int i = 0; i < n - 1; i++)
             {
-                atribuicoes++;
-                for (int j = n - 1; j > i; j--)
+                for (int j = 0; j < n - i - 1; j++)
                 {
-                    atribuicoes++;
-                    comparacoes++;
-                    if (vet[j] < vet[j - 1])
+                    if (vetor[j] > vetor[j + 1])
                     {
-                        int tmp = vet[j];
-                        vet[j] = vet[j - 1];
-                        vet[j - 1] = tmp;
-                        atribuicoes += 3;
-                        trocas++;
+                        int temp = vetor[j];
+                        vetor[j] = vetor[j + 1];
+                        vetor[j + 1] = temp;
                     }
                 }
             }
-
-            Console.WriteLine("BubbleSort - Comparacoes: " + comparacoes + ", Atribuicoes: " + atribuicoes + ", Trocas: " + trocas);
-            return vet;
+            return vetor;
         }
     }
-
 }

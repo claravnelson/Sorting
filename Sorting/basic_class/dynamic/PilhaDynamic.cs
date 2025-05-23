@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sorting.basic_class.dynamic
+﻿namespace Sorting.basic_class.dynamic
 {
     class PilhaDynamic
     {
@@ -49,4 +43,3 @@ namespace Sorting.basic_class.dynamic
         }
     }
 }
-
