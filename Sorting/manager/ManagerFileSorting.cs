@@ -1,5 +1,6 @@
 ﻿using Sorting.enums;
 using Sorting.sorting.efficient;
+using Sorting.sorting.specials;
 using Sorting.sorting.simple;
 
 namespace Sorting.manager
@@ -25,12 +26,15 @@ namespace Sorting.manager
                     break;
 
                 case Sortings.BUCKETSORT:
+                    ordenado = BucketSort.Sorting(vet);
                     break;
 
                 case Sortings.COUNTINGSORT:
+                    ordenado = CountingSort.Sorting(vet);
                     break;
 
                 case Sortings.RADIXSORT:
+                    ordenado = RadixSort.Sorting(vet);
                     break;
 
                 case Sortings.SHELLSORT:

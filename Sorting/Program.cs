@@ -1,71 +1,151 @@
-﻿using Sorting.basic_class.@static;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using Sorting.basic_class.@static;
 using Sorting.manager;
-using Sorting.print;
+using Sorting.sorting.efficient;
+using Sorting.sorting.simple;
 
-public class Program
+namespace Sorting
 {
-    public static void Main(string[] args)
+    class Program
     {
-        // https://github.com/accj1990/Sorting.git
-        // https://pt.overleaf.com/read/kptbxrwtrzch#8b9776
-        // Agora funciona
-        int[] vet = ManagerFileReader.Arquivo10TXT();
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.WriteLine("\n--- Menu de Ordenação ---");
+                Console.WriteLine("1. BubbleSort");
+                Console.WriteLine("2. InsertionSort");
+                Console.WriteLine("3. SelectionSort");
+                Console.WriteLine("4. ShellSort");
+                Console.WriteLine("5. QuickSort");
+                Console.WriteLine("6. MergeSort");
+                Console.WriteLine("7. HeapSort");
+                Console.WriteLine("0. Sair");
+                Console.Write("Escolha o algoritmo: ");
+                int opcao = int.Parse(Console.ReadLine());
 
-        PrintSolutionStatic.ImprimirArrayMesmaLinha(vet, Sorting.enums.Sortings.SHELLSORT);
+                if (opcao == 0) break;
 
-        ManagerFileSorting.Ordenar(Sorting.enums.Sortings.SHELLSORT, vet);
+                Console.WriteLine("\nEscolha o arquivo:");
+                Console.WriteLine("1. 100-aleatorios.txt");
+                Console.WriteLine("2. 1000-aleatorios.txt");
+                Console.WriteLine("3. 10000-aleatorios.txt");
+                Console.WriteLine("4. 100000-aleatorios.txt");
+                Console.WriteLine("5. 1000000-aleatorios.txt");
+                Console.Write("Opção: ");
+                int arquivoOpcao = int.Parse(Console.ReadLine());
 
-        PrintSolutionStatic.ImprimirArrayMesmaLinha(vet, Sorting.enums.Sortings.SHELLSORT);
+                string caminhoArquivoRelativo = arquivoOpcao switch
+                {
 
+                    1 => "inputs/100-aleatorios.txt",
+                    2 => "inputs/1000-aleatorios.txt",
+                    3 => "inputs/10000-aleatorios.txt",
+                    4 => "inputs/100000-aleatorios.txt",
+                    5 => "inputs/1000000-aleatorios.txt",
+                    _ => throw new Exception("Arquivo inválido")
+                };
 
-        // Crie um menu que solicite ao usuário qual é o arquivo que será lido e qual algoritmo deverá ser executado
+                string caminhoCompleto = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", caminhoArquivoRelativo);
+                int[] vetorOriginal = Array.ConvertAll(File.ReadAllLines(caminhoCompleto), int.Parse);
+                int[] vetor = (int[])vetorOriginal.Clone();
 
+                Stopwatch sw = Stopwatch.StartNew();
 
-        // Fila, Pilha e Lista em alocação estática
-        Fila f = new Fila(5);
+                switch (opcao)
+                {
+                    case 1:
+                        BubbleSort.Sorting(vetor);
+                        break;
+                    case 2:
+                        InsertionSort.Sorting(vetor);
+                        break;
+                    case 3:
+                        SelectionSort.Sorting(vetor);
+                        break;
+                    case 4:
+                        ShellSort.Sorting(vetor);
+                        break;
+                    case 5:
+                        QuickSort.Sorting(vetor);
+                        break;
+                    case 6:
+                        MergeSort.Sorting(vetor);
+                        break;
+                    case 7:
+                        HeapSort.Sorting(vetor);
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida.");
+                        break;
+                }
 
-        f.Inserir(1);
-        f.Inserir(2);
-        f.Inserir(3);
-        f.Inserir(4);
-        f.Inserir(5);
+                sw.Stop();
+                Console.WriteLine("Tempo de execução: " + sw.Elapsed.TotalSeconds + " segundos\n");
 
-        f.Mostrar();
+                Console.WriteLine("Vetor ordenado:");
+                foreach (int numero in vetor)
+                {
+                    Console.Write(numero + " ");
+                }
+                Console.WriteLine("\n");
 
-        f.Inserir(6); // não consigo inserir pois a fila está cheia
+                //testes com o arquivo de 100 (questao 7)
+                Console.WriteLine();
+                /*
+                Console.WriteLine("Questão 7");
+                int[] dados = ManagerFileReader.Arquivo100TXT();
+                Fila fila100 = new Fila(100);
+                Pilha pilha100 = new Pilha(100);
 
-        f.Remover();
+                foreach (int numero in dados)
+                {
+                    fila100.Inserir(numero);
+                    pilha100.Inserir(numero);
+                }
+                fila100.Remover();
+                fila100.Remover();
+                pilha100.Remover();
+                pilha100.Remover();
 
-        f.Mostrar();
+                fila100.Mostrar();
+                pilha100.Mostrar();
+                */
+                /*questão 9
+                Console.WriteLine();
+                Console.WriteLine("Questão 9");
+                int[] testes = ManagerFileReader.Arquivo1000000TXT();
 
-        f.Inserir(6);
+                Lista lista = new Lista(testes.Length);
 
-        f.Mostrar();
+                foreach (int numero in testes)
+                {
+                    lista.InserirFim(numero);
+                }
 
-        f.Remover();
+                lista.RemoverInicio();
+                lista.RemoverFim();
+                lista.RemoverPosicao(500);
 
-        f.Remover();
+                int[] vetorParaOrdenar = new int[lista.cont];
+                for (int i = 0; i < lista.cont; i++)
+                {
+                    vetorParaOrdenar[i] = lista.lista[i];
+                }
 
-        f.Remover();
+                ShellSort.Sorting(vetorParaOrdenar);
 
-        f.Mostrar();
+                Console.WriteLine("Todos os elementos ordenados:");
+                for (int i = 0; i < vetorParaOrdenar.Length; i++)
+                {
+                    Console.Write(vetorParaOrdenar[i] + " ");
+                }
 
-        // Pilha
-        Pilha p = new Pilha(5);
-
-        p.Inserir(1);
-        p.Inserir(2);
-        p.Inserir(3);
-        p.Inserir(4);
-        p.Inserir(5);
-
-        p.Mostrar();
-        p.Inserir(6);
-
-        p.Remover();
-        p.Remover();
-
-        p.Mostrar();
-
+                Console.WriteLine();
+            */
+            }
+        }
     }
 }

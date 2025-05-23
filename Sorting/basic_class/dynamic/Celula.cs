@@ -5,12 +5,6 @@
         public int valor;
         public Celula? prox;
 
-        public Celula()
-        {
-            this.valor = -1;
-            this.prox = null;
-        }
-
         public Celula(int valor)
         {
             this.valor = valor;

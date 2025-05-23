@@ -28,28 +28,94 @@
 
         public bool InserirInicio(int item)
         {
-            return true;// implemente
+            if (cont < lista.Length)
+            {
+                for (int i = cont; i > 0; i--)
+                {
+                    lista[i] = lista[i - 1];
+                }
+                lista[0] = item;
+                cont++;
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Lista está cheia, não é possível inserir " + item);
+                return false;
+            }
         }
 
-        public bool InserirPosicao(int pos)
+        public bool InserirPosicao(int pos, int item)
         {
-            return true;// implemente
+            if (cont < lista.Length && pos >= 0 && pos <= cont)
+            {
+                for (int i = cont; i > pos; i--)
+                {
+                    lista[i] = lista[i - 1];
+                }
+                lista[pos] = item;
+                cont++;
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Posição inválida ou lista cheia.");
+                return false;
+            }
         }
 
         public int RemoverFim()
         {
-            return -1; // implemente
+            if (cont > 0)
+            {
+                cont--;
+                return lista[cont];
+            }
+            else
+            {
+                Console.WriteLine("Lista vazia, nada a remover.");
+                return -1;
+            }
         }
 
         public int RemoverInicio()
         {
-            return -1; // implemente
+            if (cont > 0)
+            {
+                int removido = lista[0];
+                for (int i = 0; i < cont - 1; i++)
+                {
+                    lista[i] = lista[i + 1];
+                }
+                cont--;
+                return removido;
+            }
+            else
+            {
+                Console.WriteLine("Lista vazia, nada a remover.");
+                return -1;
+            }
         }
 
         public int RemoverPosicao(int pos)
         {
-            return -1; // implemente
+            if (pos >= 0 && pos < cont)
+            {
+                int removido = lista[pos];
+                for (int i = pos; i < cont - 1; i++)
+                {
+                    lista[i] = lista[i + 1];
+                }
+                cont--;
+                return removido;
+            }
+            else
+            {
+                Console.WriteLine("Posição inválida.");
+                return -1;
+            }
         }
-
+        
     }
 }
+

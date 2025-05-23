@@ -3,12 +3,12 @@
     class Pilha
     {
         public int[] pilha;
-        public int topo; // guarda a posição do elemento do topo
+        public int topo; 
 
         public Pilha(int n)
         {
             pilha = new int[n];
-            topo = -1; // posição inválida
+            topo = -1; 
         }
 
         public bool Inserir(int item)
